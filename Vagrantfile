@@ -2,8 +2,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "CentOS_6_4_64"
 
-  config.vm.network :private_network, ip: "192.168.33.40"
-	config.vm.hostname = "kyototojikikaikan.or.jp"
+  config.vm.network :private_network, ip: "192.168.33.44"
+	config.vm.hostname = "web.dev"
   config.ssh.forward_agent = true
 
   # Create a public network, which generally matched to bridged network.

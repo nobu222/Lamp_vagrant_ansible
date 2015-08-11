@@ -1,0 +1,20 @@
+- name: wp cli download
+  get_url: url=https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar dest=/usr/local/bin/wp mode=775
+
+- name: make wp directory
+  file: path=/var/www/html/wordpress state=directory mode=755
+  sudo: no
+
+- name: wp download
+  command: /usr/local/bin/wp core download --path=/var/www/html/wordpress --locale=ja chdir=/var/www/html/wordpress
+  sudo: no
+  ignore_errors: yes
+
+- name: wp db create
+  mysql_db: name=wpdb state=present
+
+- name: wp config setting
+  command: /usr/local/bin/wp core config --dbname=wpdb --dbuser=root --dbpass=root chdir=/var/www/html/wordpress
+  sudo: no
+  ignore_errors: yes
+

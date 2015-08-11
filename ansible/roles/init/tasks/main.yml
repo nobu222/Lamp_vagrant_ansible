@@ -1,4 +1,16 @@
 ---
+- name: yum update
+  sudo: yes
+  yum: name=* state=latest
+
+- name: add repository epel
+  sudo: yes
+  yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+
+- name: add repository remi
+  sudo: yes
+  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-6.rpm state=present
+
 - name: Install System Packages
   sudo: yes
   yum: name={{ item }} state=present

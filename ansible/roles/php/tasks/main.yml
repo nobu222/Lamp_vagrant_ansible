@@ -1,11 +1,21 @@
+---
+- name: disable epel
+  command: yum-config-manager --disable epel
+- name: disable remi
+  command: yum-config-manager --disable remi
+- name: disable remi-php56
+  command: yum-config-manager --disable remi-php56
+
 - name: Install php
   sudo: yes
-  yum: name=php state=present
+  yum: name=php state=installed enablerepo=remi,remi-php56
 
 - name: Install php package
   sudo: yes
-  yum: name={{ item }} state=present
+  yum: name={{ item }} state=installed enablerepo=remi,remi-php56
   with_items: php_packages
 
-- name: Configure php.ini
-  template: src=php.ini.tpl dest=/etc/php.ini
+- name: copy 15-xdebug.ini
+  copy: src=15-xdebug.ini dest=/etc/php.d/15-xdebug.ini backup=yes
+- name: copy php_custom.ini
+  copy: src=php_custom.ini dest=/etc/php.ini backup=yes

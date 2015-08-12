@@ -19,3 +19,13 @@
   copy: src=15-xdebug.ini dest=/etc/php.d/15-xdebug.ini backup=yes
 - name: copy php_custom.ini
   copy: src=php_custom.ini dest=/etc/php.ini backup=yes
+
+- name: make error log directory
+  file: path=/var/log/php state=directory owner=apache group=apache
+- name: make error log file
+  file: path=/var/log/php/error.log state=touch owner=apache group=apache
+
+- name: add php log setting lotate
+  copy: src=php.lotate dest=/etc/logrotate.d/php
+- name: lotate on
+  command: logrotate -dv /etc/logrotate.d/php
